@@ -27,9 +27,9 @@ export default function Home() {
       <h1 className="text-4xl font-bold mb-8">My Todo List</h1>
       <div className="w-full max-w-md">
         <ImportExport />
-        <Dashboard key={refresh.toString()} />
+        <Dashboard key={`dashboard-${refresh.toString()}`} />
         <TaskForm onSubmit={handleAddTask} />
-        <TaskList key={refresh.toString()} />
+        <TaskList key={`tasklist-${refresh.toString()}`} />
       </div>
     </main>
   );
