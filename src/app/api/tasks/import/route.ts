@@ -2,6 +2,9 @@ import { db } from '@/db';
 import { tasks } from '@/db/schema';
 import { NextRequest, NextResponse } from 'next/server';
 import { parse } from 'papaparse';
+import type { InferInsertModel } from 'drizzle-orm';
+
+type NewTask = InferInsertModel<typeof tasks>;
 
 export async function POST(req: NextRequest) {
   const formData = await req.formData();
@@ -14,21 +17,22 @@ export async function POST(req: NextRequest) {
   const fileText = await file.text();
 
   try {
-    const parsed = parse(fileText, {
+    const parsed = parse<NewTask>(fileText, {
       header: true,
       skipEmptyLines: true,
+      transform: (value, header) => {
+        if (header === 'completed') {
+          return value === 'true';
+        }
+        return value;
+      }
     });
 
-    const newTasks = parsed.data.map((row: any) => ({
-      title: row.title,
-      description: row.description,
-      completed: row.completed === 'true',
-    }));
-
-    await db.insert(tasks).values(newTasks);
+    await db.insert(tasks).values(parsed.data);
 
     return NextResponse.json({ message: 'Import successful' });
-  } catch (error) {
-    return NextResponse.json({ error: 'Failed to parse or import CSV' }, { status: 500 });
+  } catch (e) {
+    const error = e as Error;
+    return NextResponse.json({ error: 'Failed to parse or import CSV', details: error.message }, { status: 500 });
   }
 }

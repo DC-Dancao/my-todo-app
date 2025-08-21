@@ -1,23 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
-import { tool } from "@langchain/core/tools";
 import { z } from "zod";
 
-// This is a placeholder tool as the agent requires at least one.
-// In a real-world scenario, this could be a web search tool.
-const placeholderTool = tool(
-  async () => {
-    return "This is a placeholder response.";
-  },
-  {
-    name: "placeholder_tool",
-    description: "A placeholder tool.",
-    schema: z.object({}),
-  }
-);
-
 const model = new ChatGoogleGenerativeAI({
-  model: "gemini-2.5-flash",
+  model: "gemini-1.5-flash",
   apiKey: process.env.GEMINI_API_KEY,
 });
 

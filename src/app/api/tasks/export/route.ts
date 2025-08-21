@@ -1,10 +1,20 @@
 import { db } from '@/db';
 import { tasks } from '@/db/schema';
 import { NextResponse } from 'next/server';
+import type { InferSelectModel } from 'drizzle-orm';
 
-function convertToCSV(data: any[]) {
+type Task = InferSelectModel<typeof tasks>;
+
+function convertToCSV(data: Task[]) {
+  if (data.length === 0) {
+    return "";
+  }
   const headers = Object.keys(data[0]);
-  const rows = data.map(obj => headers.map(header => JSON.stringify(obj[header])).join(','));
+  const rows = data.map(obj =>
+    headers.map(header =>
+      JSON.stringify(obj[header as keyof Task])
+    ).join(',')
+  );
   return [headers.join(','), ...rows].join('\n');
 }
 
