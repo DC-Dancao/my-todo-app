@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { ChatAnthropic } from "@langchain/anthropic";
+import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { tool } from "@langchain/core/tools";
 import { z } from "zod";
 
@@ -16,9 +16,9 @@ const placeholderTool = tool(
   }
 );
 
-const model = new ChatAnthropic({
-  model: "claude-3-sonnet-20240229", // Using a recommended model
-  apiKey: process.env.ANTHROPIC_API_KEY,
+const model = new ChatGoogleGenerativeAI({
+  model: "gemini-2.5-flash",
+  apiKey: process.env.GEMINI_API_KEY,
 });
 
 export async function POST(req: NextRequest) {
@@ -29,8 +29,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Title is required' }, { status: 400 });
     }
     
-    if (!process.env.ANTHROPIC_API_KEY) {
-        return NextResponse.json({ error: 'ANTHROPIC_API_KEY is not set' }, { status: 500 });
+    if (!process.env.GEMINI_API_KEY) {
+        return NextResponse.json({ error: 'GEMINI_API_KEY is not set' }, { status: 500 });
     }
 
     const prompt = `Based on the task title "${title}", generate a concise, one-sentence description for a to-do list item.`;
