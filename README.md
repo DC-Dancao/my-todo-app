@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TodoList Task Management Application
 
-## Getting Started
+This is a simple and practical TodoList task management web application built with Next.js, TypeScript, and Tailwind CSS.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Core Features
+- **Add New Tasks**: Create new tasks with a title and an optional description.
+- **Edit and Delete Tasks**: Modify existing tasks or remove them completely.
+- **Mark Complete**: Toggle the completion status of each task.
+- **Task List Display**: View all tasks in a clean and organized list, sorted by creation time.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Bonus Features
+- **AI Task Assistant**: Automatically generate task descriptions based on the title using an AI model.
+- **Data Statistics Dashboard**: View key statistics, including total tasks, completed tasks, and the overall completion rate.
+- **Data Import/Export**: Import tasks from a CSV file and export the current task list to a CSV file.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Framework**: [Next.js](https://nextjs.org/) 15
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Database**: [PostgreSQL](https://www.postgresql.org/)
+- **ORM**: [Drizzle ORM](https://orm.drizzle.team/)
+- **AI**: [LangChain](https://js.langchain.com/) with [Anthropic](https://www.anthropic.com/)
 
-## Learn More
+## Local Development
 
-To learn more about Next.js, take a look at the following resources:
+To run this project locally, follow these steps:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Clone the repository:**
+   ```bash
+   git clone <repository-url>
+   cd my-todo-app
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-## Deploy on Vercel
+3. **Set up environment variables:**
+   Create a `.env.local` file in the root of the project and add the following variables:
+   ```
+   DATABASE_URL="postgresql://<user>:<password>@<host>:<port>/<database>"
+   ANTHROPIC_API_KEY="your-anthropic-api-key"
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4. **Run the development server:**
+   ```bash
+   npm run dev
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
+
+## Deployment
+
+This project is intended to be deployed on [Vercel](https://vercel.com/). Ensure that you have configured the necessary environment variables in your Vercel project settings.
