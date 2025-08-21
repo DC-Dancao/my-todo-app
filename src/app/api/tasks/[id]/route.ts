@@ -1,17 +1,17 @@
 import { db } from '@/db';
 import { tasks } from '@/db/schema';
 import { eq } from 'drizzle-orm';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function PUT(request: Request, { params }: { params: { id: string } }) {
-  const { id } = await params;
+export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+  const { id } = params;
   const { title, description, completed } = await request.json();
   const updatedTask = await db.update(tasks).set({ title, description, completed, updatedAt: new Date() }).where(eq(tasks.id, parseInt(id))).returning();
   return NextResponse.json(updatedTask[0]);
 }
 
-export async function DELETE(request: Request, { params }: { params: { id: string } }) {
-  const { id } = await params;
+export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+  const { id } = params;
   const deletedTask = await db.delete(tasks).where(eq(tasks.id, parseInt(id))).returning();
   return NextResponse.json(deletedTask[0]);
 }

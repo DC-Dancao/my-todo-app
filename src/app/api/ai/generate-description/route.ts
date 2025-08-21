@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
-import { z } from "zod";
 
 const model = new ChatGoogleGenerativeAI({
   model: "gemini-1.5-flash",
