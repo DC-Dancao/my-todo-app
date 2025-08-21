@@ -22,7 +22,7 @@ This is a simple and practical TodoList task management web application built wi
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 - **Database**: [PostgreSQL](https://www.postgresql.org/)
 - **ORM**: [Drizzle ORM](https://orm.drizzle.team/)
-- **AI**: [LangChain](https://js.langchain.com/) with [Anthropic](https://www.anthropic.com/)
+- **AI**: [LangChain](https://js.langchain.com/) with GEMINI
 
 ## Local Development
 
@@ -43,7 +43,7 @@ To run this project locally, follow these steps:
    Create a `.env.local` file in the root of the project and add the following variables:
    ```
    DATABASE_URL="postgresql://<user>:<password>@<host>:<port>/<database>"
-   ANTHROPIC_API_KEY="your-anthropic-api-key"
+   GEMINI_API_KEY="your-gemini-api-key"
    ```
 
 4. **Run the development server:**
