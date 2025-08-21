@@ -1,7 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from '@/components/ui/dialog';
 import TaskForm from './TaskForm';
+import { Button } from './ui/button';
 
 interface Task {
   id: number;
@@ -24,14 +31,21 @@ export default function EditTaskModal({ task, onClose, onSave }: EditTaskModalPr
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg">
-        <h2 className="text-2xl font-bold mb-4">Edit Task</h2>
-        <TaskForm onSubmit={handleSave} />
-        <button onClick={onClose} className="mt-4 p-2 bg-gray-500 text-white rounded">
-          Cancel
-        </button>
-      </div>
-    </div>
+    <Dialog open={true} onOpenChange={onClose}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Edit Task</DialogTitle>
+        </DialogHeader>
+        <TaskForm
+          onSubmit={handleSave}
+          initialData={{ title: task.title, description: task.description }}
+        />
+        <DialogFooter>
+          <Button variant="outline" onClick={onClose}>
+            Cancel
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

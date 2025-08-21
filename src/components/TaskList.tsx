@@ -2,6 +2,16 @@
 
 import { useEffect, useState } from 'react';
 import EditTaskModal from './EditTaskModal';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Button } from '@/components/ui/button';
 
 interface Task {
   id: number;
@@ -80,31 +90,42 @@ export default function TaskList() {
 
   return (
     <div className="space-y-4">
+      <h2 className="text-2xl font-bold">Task List</h2>
       {tasks.length === 0 ? (
         <p>No tasks yet. Add one above!</p>
       ) : (
-        tasks.map((task) => (
-          <div key={task.id} className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border rounded-lg">
-            <div className="mb-4 sm:mb-0">
-              <h2 className="text-xl font-bold">{task.title}</h2>
-              <p className="text-gray-500">{task.description}</p>
-            </div>
-            <div className="flex items-center gap-4">
-              <input
-                type="checkbox"
-                checked={task.completed}
-                onChange={() => handleToggleComplete(task)}
-                className="w-6 h-6"
-              />
-              <button onClick={() => setEditingTask(task)} className="p-2 bg-yellow-500 text-white rounded">
-                Edit
-              </button>
-              <button onClick={() => handleDeleteTask(task.id)} className="p-2 bg-red-500 text-white rounded">
-                Delete
-              </button>
-            </div>
-          </div>
-        ))
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Status</TableHead>
+              <TableHead>Title</TableHead>
+              <TableHead>Description</TableHead>
+              <TableHead>Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {tasks.map((task) => (
+              <TableRow key={task.id}>
+                <TableCell>
+                  <Checkbox
+                    checked={task.completed}
+                    onCheckedChange={() => handleToggleComplete(task)}
+                  />
+                </TableCell>
+                <TableCell>{task.title}</TableCell>
+                <TableCell>{task.description}</TableCell>
+                <TableCell className="space-x-2">
+                  <Button variant="outline" size="sm" onClick={() => setEditingTask(task)}>
+                    Edit
+                  </Button>
+                  <Button variant="destructive" size="sm" onClick={() => handleDeleteTask(task.id)}>
+                    Delete
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       )}
       {editingTask && (
         <EditTaskModal

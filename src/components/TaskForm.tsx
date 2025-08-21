@@ -1,20 +1,33 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
 
 interface TaskFormProps {
   onSubmit: (task: { title: string; description: string }) => void;
+  initialData?: { title: string; description: string | null };
 }
 
-export default function TaskForm({ onSubmit }: TaskFormProps) {
+export default function TaskForm({ onSubmit, initialData }: TaskFormProps) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+
+  useEffect(() => {
+    if (initialData) {
+      setTitle(initialData.title);
+      setDescription(initialData.description || '');
+    }
+  }, [initialData]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit({ title, description });
-    setTitle('');
-    setDescription('');
+    if (!initialData) {
+      setTitle('');
+      setDescription('');
+    }
   };
 
   const handleGenerateDescription = async () => {
@@ -36,33 +49,41 @@ export default function TaskForm({ onSubmit }: TaskFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-      <input
-        type="text"
-        placeholder="Title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        className="p-2 border rounded"
-        required
-      />
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div>
+        <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+          Title
+        </label>
+        <Input
+          id="title"
+          type="text"
+          placeholder="Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
+      </div>
       <div className="relative">
-        <textarea
+        <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+          Description
+        </label>
+        <Textarea
+          id="description"
           placeholder="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          className="p-2 border rounded w-full"
         />
-        <button
+        <Button
           type="button"
+          variant="outline"
+          size="sm"
           onClick={handleGenerateDescription}
-          className="absolute right-2 top-2 p-1 bg-gray-200 text-xs rounded"
+          className="absolute right-2 bottom-2"
         >
           Generate with AI
-        </button>
+        </Button>
       </div>
-      <button type="submit" className="p-2 bg-blue-500 text-white rounded">
-        Add Task
-      </button>
+      <Button type="submit">{initialData ? 'Save Changes' : 'Add Task'}</Button>
     </form>
   );
 }

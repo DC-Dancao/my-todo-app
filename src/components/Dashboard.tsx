@@ -1,6 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 
 interface Stats {
   totalTasks: number;
@@ -44,22 +50,34 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="p-4 my-4 border rounded-lg">
-      <h2 className="text-2xl font-bold mb-4">Dashboard</h2>
+    <div className="space-y-4">
+      <h2 className="text-2xl font-bold">Dashboard</h2>
       {stats && (
-        <div className="grid grid-cols-3 gap-4">
-          <div className="p-4 bg-gray-100 rounded-lg">
-            <h3 className="text-lg font-bold">Total Tasks</h3>
-            <p className="text-3xl">{stats.totalTasks}</p>
-          </div>
-          <div className="p-4 bg-gray-100 rounded-lg">
-            <h3 className="text-lg font-bold">Completed Tasks</h3>
-            <p className="text-3xl">{stats.completedTasks}</p>
-          </div>
-          <div className="p-4 bg-gray-100 rounded-lg">
-            <h3 className="text-lg font-bold">Completion Rate</h3>
-            <p className="text-3xl">{stats.completionRate.toFixed(2)}%</p>
-          </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Total Tasks</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-3xl">{stats.totalTasks}</p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Completed Tasks</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-3xl">{stats.completedTasks}</p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Completion Rate</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-3xl">{stats.completionRate.toFixed(2)}%</p>
+            </CardContent>
+          </Card>
         </div>
       )}
     </div>

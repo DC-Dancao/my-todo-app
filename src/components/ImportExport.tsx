@@ -1,6 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 
 export default function ImportExport() {
   const [file, setFile] = useState<File | null>(null);
@@ -34,19 +37,25 @@ export default function ImportExport() {
   };
 
   return (
-    <div className="p-4 my-4 border rounded-lg">
-      <h2 className="text-2xl font-bold mb-4">Import / Export</h2>
-      <div className="flex gap-4">
-        <div>
-          <input type="file" onChange={handleFileChange} />
-          <button onClick={handleImport} className="p-2 bg-green-500 text-white rounded">
-            Import
-          </button>
+    <Card>
+      <CardHeader>
+        <CardTitle>Import / Export</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div className="space-y-2">
+          <label htmlFor="import-file">Import from CSV</label>
+          <div className="flex gap-2">
+            <Input id="import-file" type="file" onChange={handleFileChange} />
+            <Button onClick={handleImport}>Import</Button>
+          </div>
         </div>
-        <button onClick={handleExport} className="p-2 bg-blue-500 text-white rounded">
-          Export
-        </button>
-      </div>
-    </div>
+        <div className="space-y-2">
+          <label>Export to CSV</label>
+          <Button onClick={handleExport} className="w-full">
+            Export
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
   );
 }
