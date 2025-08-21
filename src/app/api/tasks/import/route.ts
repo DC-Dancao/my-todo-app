@@ -20,9 +20,9 @@ export async function POST(req: NextRequest) {
     const parsed = parse<NewTask>(fileText, {
       header: true,
       skipEmptyLines: true,
-      transform: (value, header) => {
+      transform: (value: string, header: string) => {
         if (header === 'completed') {
-          return value === 'true';
+          return value.toLowerCase() === 'true';
         }
         return value;
       }
@@ -32,7 +32,6 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ message: 'Import successful' });
   } catch (e) {
-    const error = e as Error;
-    return NextResponse.json({ error: 'Failed to parse or import CSV', details: error.message }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to parse or import CSV', details: (e as Error).message }, { status: 500 });
   }
 }

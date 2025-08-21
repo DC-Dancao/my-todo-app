@@ -9,10 +9,10 @@ function convertToCSV(data: Task[]) {
   if (data.length === 0) {
     return "";
   }
-  const headers = Object.keys(data[0]);
+  const headers = Object.keys(data[0]) as (keyof Task)[];
   const rows = data.map(obj =>
     headers.map(header =>
-      JSON.stringify(obj[header as keyof Task])
+      JSON.stringify(obj[header])
     ).join(',')
   );
   return [headers.join(','), ...rows].join('\n');
